@@ -34,6 +34,7 @@ body {
 </style>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
 		function step() {
 			document.deg = document.deg + 1;
@@ -45,13 +46,21 @@ body {
 			window.requestAnimationFrame(step);
 		};
 
+
 	$(document).ready(function() {
+		if (window.io !== undefined) {
+			window.socket = io();
+		} else {
+			window.socket = {};
+			window.socket.emit = function() {};
+		}
+		
 
 		document.deg = 0;
 
 		$('body').keydown(function(event) {
 		
-
+		 window.socket.emit('down', event.which);
 		 if ( event.which == 87 ) { // touche w
 		   console.log('touche w');
 		   flash('#knack1');
@@ -98,7 +107,8 @@ body {
 			$(saucisse).css('opacity', '1');
 		}
 
-		function deflash() {
+		function deflash(event) {
+			window.socket.emit('up', event.which);
 			$('.saucisse').addClass('decr').removeClass('incr');
 			$('.saucisse').css('opacity', '0.1');
 			
@@ -115,6 +125,7 @@ body {
 	<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
 	<img id="knack5" class="saucisse" src="mcol-sausage.svg" />
 	<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
+
 
 </body>
 </html>
