@@ -1,0 +1,120 @@
+<html>
+<head>
+	<title>test</title>
+</head>
+<style type="text/css">
+body {
+	height: 800px;
+	background: repeating-linear-gradient(
+	  0deg,
+	  #606dbc,
+	  #606dbc 100px,
+	  #465298 100px,
+	  #465298 200px
+	);
+	text-align: center;
+}
+
+#knack1, #knack2, #knack3, #knack4, #knack5, #knack6 {
+	width: 20%;
+	margin-top: 100px;
+	transition: all .1s ease-in-out;
+	opacity:0.5;
+
+}
+
+.incr { 
+	transform: scale(1.5); 
+}
+
+.decr {
+	transform: scale(0.75);
+}
+
+</style>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+		function step() {
+			document.deg = document.deg + 1;
+			
+			var style = 'repeating-linear-gradient( '+ document.deg +'deg, #650205, #650205 200px, #9a0a11 200px, #9a0a11 400px)';
+			$('body').css('background', style);
+
+			//$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
+			window.requestAnimationFrame(step);
+		};
+
+	$(document).ready(function() {
+
+		document.deg = 0;
+
+		$('body').keydown(function(event) {
+		
+
+		 if ( event.which == 87 ) { // touche w
+		   console.log('touche w');
+		   flash('#knack1');
+		  }
+
+		 else if ( event.which == 65 ) { // touche a
+		   console.log('touche a');
+		   flash('#knack2');
+		  }
+
+		 else if ( event.which == 83 ) { // touche S
+		   console.log('touche s');
+		   flash('#knack3');
+		  }
+
+		 else if ( event.which == 68 ) { // touche d
+		   console.log('touche d');
+		   flash('#knack4');
+		  }
+
+		 else if ( event.which == 70 ) { // touche f
+		   console.log('touche f');
+		   flash('#knack5');
+		  }
+
+		 else if ( event.which == 71 ) { // touche g
+		   console.log('touche g');
+		   flash('#knack6');
+		  }
+
+		 else  { 
+		 	console.log('autre touche');
+		  }
+
+		  })
+
+
+		
+		$('body').on('keyup', deflash);
+		window.requestAnimationFrame(step);
+	});
+		function flash(saucisse) {
+			$(saucisse).addClass('incr').removeClass('decr');
+			$(saucisse).css('opacity', '1');
+		}
+
+		function deflash() {
+			$('.saucisse').addClass('decr').removeClass('incr');
+			$('.saucisse').css('opacity', '0.1');
+			
+		}
+
+
+
+</script>
+
+<body id="plop">
+	<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
+	<img id="knack2" class="saucisse" src="mcol-sausage.svg" />
+	<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
+	<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
+	<img id="knack5" class="saucisse" src="mcol-sausage.svg" />
+	<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
+
+</body>
+</html>
