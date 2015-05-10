@@ -329,6 +329,14 @@ background-color: #fff;
 		
 	};
 
+	function checkColorsAndRun(evIsCold){
+		if(evIsCold){
+			window.requestAnimationFrame(stepCold);			
+		}else{
+			window.requestAnimationFrame(step);	
+		}
+	}
+
 
 	$(document).ready(function() {
 		if (window.io !== undefined) {
@@ -415,11 +423,7 @@ background-color: #fff;
 
 		$('body').on('keyup', hidetxt);
 
-		if(isCold){
-			window.requestAnimationFrame(stepCold);			
-		}else{
-			window.requestAnimationFrame(step);	
-		}
+		checkColorsAndRun(true);
 
 
 	});
