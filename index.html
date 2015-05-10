@@ -292,10 +292,10 @@ background-color: #fff;
 			var randomsize = stripesize[Math.floor(Math.random() * stripesize.length)];
 
 			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
-
 			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' '+randomsize+'px, '+random_color2 +' '+randomsize+'px, '+random_color2+' '+randomsize*2+'px)';
+			
 			$('#screen').css('background', style);
-			console.log(style);
+			//console.log(style);
 
 			$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
 
@@ -317,19 +317,21 @@ background-color: #fff;
 
 		document.deg = 0;
 
+
 		$('body').keydown(function(event) {
 		
-		 window.socket.emit('down', event.which);
-		 if ( event.which == 87 ) { // touche w
-		   console.log('touche w');
+		//console.log(event.which);
+	 	window.socket.emit('down', event.which);
+		 if ( event.which == 90 ) { // touche w
+		   console.log('touche z');
 		   rotateSausages('#knack1');
 		   flash('#knack1');
 		   showtxt('#typo1');
 
 		  }
 
-		 else if ( event.which == 65 ) { // touche a
-		   console.log('touche a');
+		 else if ( event.which == 81 ) { // touche a
+		   console.log('touche q');
 		   flash('#knack2');
 		   rotateSausages('#knack2');
 		   showtxt('#typo2');
@@ -377,14 +379,14 @@ background-color: #fff;
 		  };
 		})();
 		
-		//$('body').on('keyup', deflash, derotateSausages);
+		$('body').on('keyup', deflash, derotateSausages);
 
-		$('body').on('keyup',function() {
+		/*$('body').on('keyup',function() {
 		    delay(function(){
 		      deflash;
 		      derotateSausages;
 		    }, 100 );
-		});
+		});*/
 
 		$('body').on('keyup', hidetxt);
 
