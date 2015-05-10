@@ -21,6 +21,7 @@ background-color: #fff;
 	text-align: center;
 	position: relative;
 	transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
 }
 
 
@@ -30,6 +31,7 @@ background-color: #fff;
 	width: 25%;
 	margin: 0;
 	transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
 	opacity:0;
 	z-index: 20;
 	position: relative;
@@ -51,10 +53,12 @@ background-color: #fff;
 
 
 .rotateIncr { 
+	-moz-transform: rotate(360deg) !important;
 	-webkit-transform: rotate(360deg) !important;
 }
 
 .rotateDecr {
+	-moz-transform: rotate(0deg) !important;
 	-webkit-transform: rotate(0deg) !important;
 }
 
@@ -143,13 +147,7 @@ background-color: #fff;
 			var stripesize = [50, 100, 150, 200,250];
 			var randomsize = stripesize[Math.floor(Math.random() * stripesize.length)];
 
-			//var style = 'repeating-linear-gradient( '+ document.deg +'deg, #650205, #650205 200px, #9a0a11 200px, #9a0a11 400px)';
-			if (document.deg % 90) {
-				var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
-				console.log('multiple 90');
-			} else {
-				var style = 'repeating-linear-gradient( -'+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
-			}
+			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
 
 			//var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
 			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' '+randomsize+'px, '+random_color2 +' '+randomsize+'px, '+random_color2+' '+randomsize*2+'px)';
@@ -157,7 +155,11 @@ background-color: #fff;
 			console.log(style);
 
 			$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
-			window.requestAnimationFrame(step);
+
+			setTimeout(function() {
+				window.requestAnimationFrame(step) 
+			}, 100);
+			
 		};
 
 
@@ -231,6 +233,7 @@ background-color: #fff;
 		$('body').on('keyup', hidetxt);
 
 		window.requestAnimationFrame(step);
+
 	});
 		function flash(saucisse) {
 			$(saucisse).addClass('incr').removeClass('decr');
