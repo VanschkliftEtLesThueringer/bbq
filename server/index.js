@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var SerialPort = require("serialport").SerialPort;
-var serialport = new SerialPort("/dev/tty.usbserial-A9K3V51X",   {baudrate: 115200
+var serialport = new SerialPort("/dev/tty.usbmodem411",   {baudrate: 115200
 });
 
 app.use(express.static(__dirname + '/static'));
