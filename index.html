@@ -39,6 +39,17 @@ background-color: #fff;
 
 
 /*** limitation de l'espace d'affichage ***/
+
+#wrap {
+	overflow: hidden;
+	width:1024px;
+	height: 768px;
+	z-index: 0;
+	position: relative;
+}
+
+
+
 #screen{
 	z-index: 2;
 	overflow: hidden;
@@ -68,8 +79,38 @@ background-color: #fff;
 }
 
 
+/***  animation des étoiles **/
+.grossesEtoiles { 
 
+    -webkit-animation-name: starification;
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: starification;
+    -moz-animation-duration: 400ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: starification;
+    -ms-animation-duration: 400ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+}
 
+@-moz-keyframes starification {
+    0% { -moz-transform: scale(1); }
+    50% { -moz-transform: scale(3); }
+    100% { -moz-transform: scale(5); }
+}
+@-webkit-keyframes starification {
+    0% { -webkit-transform: scale(1); }
+    50% { -webkit-transform: scale(3); }
+    100% { -webkit-transform: scale(5); }
+}
+@keyframes starification {
+    0% {transform:scale(1);}
+    50% {transform:scale(3);}
+    100% {transform:scale(5);}
+}
 
 /*** effet de transformation des saucisses ***/
 .incr { 
@@ -364,8 +405,9 @@ background-color: #fff;
 </script>
 
 <body id="plop">
-	<div id="screenbg" >
-	</div>
+	<div id="wrap">
+		<div id="screenbg" class="grossesEtoiles">
+		</div>
 		<div id="screen" class="blink_sometimes">
 			<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
 			<img id="knack2" class="saucisse" src="sausage.svg" />
@@ -382,6 +424,7 @@ background-color: #fff;
 			<p id="typo6" class="texte">DROP<br />the meat</p>
 
 		</div>
+	</div>
 
 
 
