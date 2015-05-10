@@ -20,6 +20,7 @@ background-color: #fff;
 	background: #650205;
 	text-align: center;
 	position: relative;
+	transition: all .1s ease-in-out;
 }
 
 
@@ -27,7 +28,7 @@ background-color: #fff;
 /*** taille des saucisses ***/
 #knack1, #knack2, #knack3, #knack4, #knack5, #knack6 {
 	width: 25%;
-	margin: 0 10%;
+	margin: 0;
 	transition: all .1s ease-in-out;
 	opacity:0;
 	z-index: 20;
@@ -57,17 +58,16 @@ background-color: #fff;
 	-webkit-transform: rotate(0deg) !important;
 }
 
-.
 
 /*** style du texte ***/
 #typo1, #typo2, #typo3, #typo4, #typo5, #typo6{
 
 	font-size: 800%;
-	font-weight: bold;
-	color:#650205;
+	font-weight: 800;
+	color:#000;
 	position: absolute;
 	line-height: 0.8em;
-	font-family: Helvetica;
+	font-family: Upstarter;
 	opacity: 0;
 	transition: all .9s ease-in-out;
 	background-color:#fff;
@@ -96,17 +96,17 @@ background-color: #fff;
 
 .blink_me {
     -webkit-animation-name: blinker;
-    -webkit-animation-duration: 0.1s;
+    -webkit-animation-duration: 0.5s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
 
     -moz-animation-name: blinker;
-    -moz-animation-duration: 0.1s;
+    -moz-animation-duration: 0.5s;
     -moz-animation-timing-function: linear;
     -moz-animation-iteration-count: infinite;
 
     animation-name: blinker;
-    animation-duration: 0.1s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
@@ -136,9 +136,13 @@ background-color: #fff;
 <script>
 		function step() {
 			document.deg = document.deg + 1 % 360;
-			var colors = ['#ff0000', '#00ff00', '#0000ff']; //Couleurs à définir
+			var colors = ['#4E9172', '#592121', '#D14545', '#DC7829','#EDB442'];
 			var random_color = colors[Math.floor(Math.random() * colors.length)];
-			
+			var random_color2 = colors[Math.floor(Math.random() * colors.length)];
+
+			var stripesize = [50, 100, 150, 200,250];
+			var randomsize = stripesize[Math.floor(Math.random() * stripesize.length)];
+
 			//var style = 'repeating-linear-gradient( '+ document.deg +'deg, #650205, #650205 200px, #9a0a11 200px, #9a0a11 400px)';
 			if (document.deg % 90) {
 				var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
@@ -148,7 +152,9 @@ background-color: #fff;
 			}
 
 			//var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
+			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' '+randomsize+'px, '+random_color2 +' '+randomsize+'px, '+random_color2+' '+randomsize*2+'px)';
 			$('#screen').css('background', style);
+			console.log(style);
 
 			$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
 			window.requestAnimationFrame(step);
@@ -265,8 +271,8 @@ background-color: #fff;
 
 	<div id="screen">
 		<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
-		<img id="knack2" class="saucisse" src="sausage.svg" /><br />
-		<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack2" class="saucisse" src="sausage.svg" />
+		<img id="knack3" class="saucisse" src="mcol-sausage.svg" /><br />
 		<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
 		<img id="knack5" class="saucisse" src="white-sausage.svg" />
 		<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
