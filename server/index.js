@@ -24,21 +24,34 @@ serialport.on('open', function(){
 */
 	var buf = new Buffer(2);
 
+  serialport.on('data', function(data){
+      console.log(data.toString());
+  });
+
 
 	io.on('connection', function(socket){
 	  socket.on('down', function(msg){
-	    console.log('down '+ msg);
-    	buf[0] = 0x00;
+	    //console.log('down '+ msg);
+    	buf[0] = 0;
     	buf[1] = keycodetosausage(msg);
+      console.log(buf);
 	    serialport.write(buf, function(err, results) {
 
-      console.log('err ' + err);
-      console.log('results ' + results);
+      //console.log('err ' + err);
+      //console.log('results ' + results);
    		});
 	  });
 
 	  socket.on('up', function(msg){
 	    console.log('up '+ msg);
+      buf[0] = 1;
+      buf[1] = keycodetosausage(msg);
+      console.log(buf);
+      serialport.write(buf, function(err, results) {
+
+      //console.log('err ' + err);
+      //console.log('results ' + results);
+      });
 	  });
 	});
 
