@@ -8,24 +8,24 @@
 
 
 body {
-	height: 800px;
-	background: repeating-linear-gradient(
-	  0deg,
-	  #606dbc,
-	  #606dbc 100px,
-	  #465298 100px,
-	  #465298 200px
-	);
+background-color: #fff;
+}
+
+#screen{
+	width:1024px;
+	height: 768px;
+	overflow: hidden;
+	background: #650205;
 	text-align: center;
 	position: relative;
 }
-
 #knack1, #knack2, #knack3, #knack4, #knack5, #knack6 {
-	width: 15%;
+	width: 25%;
 	margin: 0 10%;
 	transition: all .1s ease-in-out;
 	opacity:0;
-	z-index: 10;
+	z-index: 20;
+	position: relative;
 
 }
 
@@ -65,7 +65,7 @@ body {
 
 #typo1, #typo2, #typo3, #typo4, #typo5, #typo6{
 
-	font-size: 1000%;
+	font-size: 800%;
 	font-weight: bold;
 	color:#650205;
 	position: absolute;
@@ -78,7 +78,7 @@ body {
 	top:0;
 	left:0;
 	width:70%;
-	margin: 10%;
+	margin: 20% 10%;
 	text-align: center;
 
 }
@@ -92,9 +92,9 @@ body {
 			document.deg = document.deg + 1 % 360;
 			
 			var style = 'repeating-linear-gradient( '+ document.deg +'deg, #650205, #650205 200px, #9a0a11 200px, #9a0a11 400px)';
-			$('body').css('background', style);
+			$('#screen').css('background', style);
 
-			//$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
+			$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
 			window.requestAnimationFrame(step);
 		};
 
@@ -124,30 +124,35 @@ body {
 		 else if ( event.which == 65 ) { // touche a
 		   console.log('touche a');
 		   flash('#knack2');
+		   rotateSausages('#knack2');
 		   showtxt('#typo2');
 		  }
 
 		 else if ( event.which == 83 ) { // touche S
 		   console.log('touche s');
 		   flash('#knack3');
+		   rotateSausages('#knack3');
 		   showtxt('#typo3');
 		  }
 
 		 else if ( event.which == 68 ) { // touche d
 		   console.log('touche d');
 		   flash('#knack4');
+		   rotateSausages('#knack4');
 		   showtxt('#typo4');
 		  }
 
 		 else if ( event.which == 70 ) { // touche f
 		   console.log('touche f');
 		   flash('#knack5');
+		   rotateSausages('#knack5');
 		   showtxt('#typo5');
 		  }
 
 		 else if ( event.which == 71 ) { // touche g
 		   console.log('touche g');
 		   flash('#knack6');
+		   rotateSausages('#knack6');
 		   showtxt('#typo6');
 		  }
 
@@ -188,7 +193,7 @@ body {
 		}
 		function derotateSausages() {
 			$('.saucisse').addClass('rotateDecr').removeClass('rotateIncr');
-			$('.saucisse').css('opacity', '0.1');		
+			$('.saucisse').css('opacity', '0');
 		}
 
 
@@ -196,21 +201,23 @@ body {
 </script>
 
 <body id="plop">
-	<div>
+
+	<div id="screen">
 		<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
 		<img id="knack2" class="saucisse" src="sausage.svg" /><br />
 		<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
 		<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
 		<img id="knack5" class="saucisse" src="white-sausage.svg" />
 		<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
-	</div>
 
-	<p id="typo1" class="texte">KRAFT<br />wurscht</p>
-	<p id="typo2" class="texte">knack <br />WERK</p>
-	<p id="typo3" class="texte">DIGITAL<br />barbecue</p>
-	<p id="typo4" class="texte">sound of<br />WURSCHT</p>
-	<p id="typo5" class="texte">ELECTRO<br />meat beat</p>
-	<p id="typo6" class="texte">DROP<br />the meat</p>
+		<p id="typo1" class="texte">KRAFT<br />wurscht</p>
+		<p id="typo2" class="texte">knack <br />WERK</p>
+		<p id="typo3" class="texte">DIGITAL<br />barbecue</p>
+		<p id="typo4" class="texte">sound of<br />WURSCHT</p>
+		<p id="typo5" class="texte">ELECTRO<br />meat beat</p>
+		<p id="typo6" class="texte">DROP<br />the meat</p>
+
+	</div>
 
 
 </body>
