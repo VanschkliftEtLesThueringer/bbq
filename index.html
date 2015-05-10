@@ -31,6 +31,14 @@ body {
 	transform: scale(0.75);
 }
 
+.rotateIncr { 
+	-webkit-transform: rotate(360deg) !important;
+}
+
+.rotateDecr {
+	-webkit-transform: rotate(0deg) !important;
+}
+
 </style>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -63,7 +71,7 @@ body {
 		 window.socket.emit('down', event.which);
 		 if ( event.which == 87 ) { // touche w
 		   console.log('touche w');
-		   flash('#knack1');
+		   rotateSausages('#knack1');
 		  }
 
 		 else if ( event.which == 65 ) { // touche a
@@ -99,8 +107,8 @@ body {
 
 
 		
-		$('body').on('keyup', deflash);
-		window.requestAnimationFrame(step);
+		$('body').on('keyup', deflash,derotateSausages);
+		//window.requestAnimationFrame(step);
 	});
 		function flash(saucisse) {
 			$(saucisse).addClass('incr').removeClass('decr');
@@ -110,6 +118,15 @@ body {
 		function deflash(event) {
 			window.socket.emit('up', event.which);
 			$('.saucisse').addClass('decr').removeClass('incr');
+			$('.saucisse').css('opacity', '0.1');
+			
+		}
+		function rotateSausages(saucisse) {
+			$(saucisse).addClass('rotateIncr').removeClass('rotateDecr');
+			$(saucisse).css('opacity', '1');		
+		}
+		function derotateSausages() {
+			$('.saucisse').addClass('rotateDecr').removeClass('rotateIncr');
 			$('.saucisse').css('opacity', '0.1');
 			
 		}
