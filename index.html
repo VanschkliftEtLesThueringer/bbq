@@ -9,17 +9,46 @@
 
 body {
 background-color: #fff;
+
+}
+
+#screenbg {
+	width:1024px;
+	height: 768px;
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 1;
+	background:
+	linear-gradient(324deg, #EDB442 4%,   transparent 4%) -70px 43px,
+	linear-gradient( 36deg, #EDB442 4%,   transparent 4%) 30px 43px,
+	linear-gradient( 72deg, #D14545 8.5%, transparent 8.5%) 30px 43px,
+	linear-gradient(288deg, #D14545 8.5%, transparent 8.5%) -70px 43px,
+	linear-gradient(216deg, #D14545 7.5%, transparent 7.5%) -70px 23px,
+	linear-gradient(144deg, #D14545 7.5%, transparent 7.5%) 30px 23px,
+
+	linear-gradient(324deg, #EDB442 4%,   transparent 4%) -20px 93px,
+	linear-gradient( 36deg, #EDB442 4%,   transparent 4%) 80px 93px,
+	linear-gradient( 72deg, #D14545 8.5%, transparent 8.5%) 80px 93px,
+	linear-gradient(288deg, #D14545 8.5%, transparent 8.5%) -20px 93px,
+	linear-gradient(216deg, #D14545 7.5%, transparent 7.5%) -20px 73px,
+	linear-gradient(144deg, #D14545 7.5%, transparent 7.5%) 80px 73px;
+	background-color: #EDB442;
+	background-size: 100px 100px;
 }
 
 
 /*** limitation de l'espace d'affichage ***/
 #screen{
-	width:1024px;
-	height: 768px;
+	z-index: 2;
 	overflow: hidden;
 	background: #650205;
 	text-align: center;
-	position: relative;
+	position: absolute;
+	top:0;
+	left: 0;
+	width:1024px;
+	height: 768px;
 	transition: all .1s ease-in-out;
 	-moz-transition: all .1s ease-in-out;
 }
@@ -115,6 +144,25 @@ background-color: #fff;
     animation-iteration-count: infinite;
 }
 
+.blink_sometimes {
+    -webkit-animation-name: blinkerdiscret;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinkerdiscret;
+    -moz-animation-duration: 3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinkerdiscret;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+/** pour le texte */
+
 @-moz-keyframes blinker {  
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
@@ -130,6 +178,25 @@ background-color: #fff;
 @keyframes blinker {  
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+/** pour les étoiles */
+@-moz-keyframes blinkerdiscret {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinkerdiscret {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinkerdiscret {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.7; }
     100% { opacity: 1.0; }
 }
 
@@ -271,23 +338,25 @@ background-color: #fff;
 </script>
 
 <body id="plop">
-
-	<div id="screen">
-		<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
-		<img id="knack2" class="saucisse" src="sausage.svg" />
-		<img id="knack3" class="saucisse" src="mcol-sausage.svg" /><br />
-		<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
-		<img id="knack5" class="saucisse" src="white-sausage.svg" />
-		<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
-
-		<p id="typo1" class="texte">KRAFT<br />wurscht</p>
-		<p id="typo2" class="texte">knack<br />WERK</p>
-		<p id="typo3" class="texte">DIGITAL<br />barbecue</p>
-		<p id="typo4" class="texte">sound of<br />WURSCHT</p>
-		<p id="typo5" class="texte">ELECTRO<br />meat beat</p>
-		<p id="typo6" class="texte">DROP<br />the meat</p>
-
+	<div id="screenbg" >
 	</div>
+		<div id="screen" class="blink_sometimes">
+			<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
+			<img id="knack2" class="saucisse" src="sausage.svg" />
+			<img id="knack3" class="saucisse" src="mcol-sausage.svg" /><br />
+			<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
+			<img id="knack5" class="saucisse" src="white-sausage.svg" />
+			<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
+
+			<p id="typo1" class="texte">KRAFT<br />wurscht</p>
+			<p id="typo2" class="texte">knack<br />WERK</p>
+			<p id="typo3" class="texte">DIGITAL<br />barbecue</p>
+			<p id="typo4" class="texte">sound of<br />WURSCHT</p>
+			<p id="typo5" class="texte">ELECTRO<br />meat beat</p>
+			<p id="typo6" class="texte">DROP<br />the meat</p>
+
+		</div>
+
 
 
 </body>
