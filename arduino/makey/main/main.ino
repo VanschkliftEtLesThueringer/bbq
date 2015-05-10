@@ -15,7 +15,7 @@ arpeggiator arpeggiator(6); //initiate and name the arpeggiator class (Output pi
 
 //All :tonic, minor2nd, major2nd, minor3rd, major3rd, fourth, tritone, fifth, minor6th, major6th, minor7th, major7th, octave.  See reference.txt for chord and mode ideas. 
 //int pentaNotes[] = {tonic, minor3rd, fourth, fifth, minor7th};
-int noteSet[] = {tonic, major2nd, major3rd, fourth, fifth, major2nd + tonic, major3rd + tonic, fourth + tonic, fifth+ tonic};
+//int noteSet[] = {tonic, major2nd, major3rd, fourth, fifth, major2nd + tonic, major3rd + tonic, fourth + tonic, fifth+ tonic};
 
 // note values: w, h, q, qt, e, et, sx, sxt, th, sxf  
 int lengthSet[] = {q, qt, et, sx};
@@ -49,6 +49,13 @@ void setup() {
   //createPattern();
 }    
 
+void debug(int* seq) {
+  Serial.print("\n");
+  for (i = 0; i< trackSize; i++) {
+    Serial.print(" ");
+    Serial.print(seq[i]); 
+  }
+}
 
 void createPattern() {
   // Define track pattern on time
@@ -79,7 +86,11 @@ void getSerialInfo() {
     if (idx == 1) { // buf is full
       if (buf[0] == 0) {// key down
         // buf[1] // nr wurscht
-        saucisseDownBefore();
+        saucisseDownBefore(buf[1]);
+        Serial.print(buf[0]);
+        Serial.print(buf[1]);
+        Serial.print("\n");
+        
         if (buf[1] == 0) saucisseDown0();
         if (buf[1] == 1) saucisseDown1();
         if (buf[1] == 2) saucisseDown2();
@@ -111,59 +122,50 @@ void getSerialInfo() {
 void loop() {
 
 getSerialInfo();
-
+//debug(trackOnOff);
 }
 
-void playTrack(int * track, int egh){
-   if(egh == 1)digitalWrite(vcaPin, 1);   
-   
-   // Appogiature Style
-   //if(track[playedTrackNoteIndex] == fifth)
-   //  arpeggiator.play(BPM, tritone, et);
+void playTrack(int * track){
    
    // Play current note of the track
-   Serial.print("\n Note Played : ");Serial.print(track[playedTrackNoteIndex]);
-   arpeggiator.play(BPM, track[playedTrackNoteIndex], trackNL[0]);
+   //Serial.print("\n Note Played : ");Serial.print(track[playedTrackNoteIndex]);
    
+   digitalWrite(vcaPin, trackOnOff[playedTrackNoteIndex]);
+   if (trackOnOff[playedTrackNoteIndex] == 1) {
+ 
+      arpeggiator.play(BPM, track[playedTrackNoteIndex], trackNL[0]);     
+   }
+
    // Get next note of the track
    playedTrackNoteIndex++;
    if(playedTrackNoteIndex > trackSize)playedTrackNoteIndex = 0;
-  
-   if(egh == 1)digitalWrite(vcaPin, 0);
-   if(egh == 1)delay(25 );    
+    
 }
  
  // Callbacks
 
-void saucisseDownBefore() {
-  digitalWrite(vcaPin, 1);
+void saucisseDownBefore(int saucisse) {
+  trackOnOff[saucisse] =  1;//(trackOnOff[saucisse] + 1) % 2; 
 }
  
 void saucisseDown0() {
-  createPattern();
-   playTrack(track, 0);   
-}
-void saucisseDown1() {
-  createPattern();
-  playTrack(track, 0); 
-}
-void saucisseDown2() {
-  createPattern();
-  playTrack(track, 0); 
-}
-void saucisseDown3() {
-  createPattern();
-  playTrack(track, 0); 
   
 }
+void saucisseDown1() {
+
+}
+void saucisseDown2() {
+
+}
+void saucisseDown3() {
+
+}
 void saucisseDown4() {
-   createPattern();
-   playTrack(track, 0); 
+ 
   
 }
 void saucisseDown5() {
-   createPattern();
-   playTrack(track, 0); 
+
 }
 
 void saucisseDownAfter() {
@@ -173,5 +175,8 @@ void saucisseDownAfter() {
 void saucisseUpAfter() {
   digitalWrite(vcaPin, 0);
 }
+
+
+
 
 
