@@ -11,6 +11,8 @@ body {
 background-color: #fff;
 }
 
+
+/*** limitation de l'espace d'affichage ***/
 #screen{
 	width:1024px;
 	height: 768px;
@@ -19,6 +21,10 @@ background-color: #fff;
 	text-align: center;
 	position: relative;
 }
+
+
+
+/*** taille des saucisses ***/
 #knack1, #knack2, #knack3, #knack4, #knack5, #knack6 {
 	width: 25%;
 	margin: 0 10%;
@@ -29,20 +35,11 @@ background-color: #fff;
 
 }
 
-#typo1 {  z-index: 1;  }
-
-#typo2 {  z-index: 2;  }
-
-#typo3 {  z-index: 3;  }
-
-#typo4 {  z-index: 4;  }
-
-#typo5 {  z-index: 5;  }
-
-#typo6 {  z-index: 6;  }
 
 
 
+
+/*** effet de transformation des saucisses ***/
 .incr { 
 	transform: scale(1.75); 
 }
@@ -62,7 +59,7 @@ background-color: #fff;
 
 .
 
-
+/*** style du texte ***/
 #typo1, #typo2, #typo3, #typo4, #typo5, #typo6{
 
 	font-size: 800%;
@@ -81,6 +78,55 @@ background-color: #fff;
 	margin: 20% 10%;
 	text-align: center;
 
+}
+
+#typo1 {  z-index: 1;  }
+
+#typo2 {  z-index: 2;  }
+
+#typo3 {  z-index: 3;  }
+
+#typo4 {  z-index: 4;  }
+
+#typo5 {  z-index: 5;  }
+
+#typo6 {  z-index: 6;  }
+
+/***** pour faire clignotter le texte *****/
+
+.blink_me {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 0.1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 0.1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 0.1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
 }
 
 </style>
@@ -170,6 +216,7 @@ background-color: #fff;
 
 		$('body').on('keyup', deflash, derotateSausages);
 		$('body').on('keyup', hidetxt);
+
 		window.requestAnimationFrame(step);
 	});
 		function flash(saucisse) {
@@ -183,11 +230,15 @@ background-color: #fff;
 			$('.saucisse').css('opacity', '0');
 		}
 		function showtxt(typo) {
-			$(typo).css('opacity', '1');	
+			$(typo).css('opacity', '1');
+			$(typo).addClass('blink_me');
+
 		}
 
 		function hidetxt() {
 			$('.texte').css('opacity', '0');	
+			$('.texte').removeClass('blink_me');
+
 
 		}
 		function rotateSausages(saucisse) {
@@ -214,7 +265,7 @@ background-color: #fff;
 		<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
 
 		<p id="typo1" class="texte">KRAFT<br />wurscht</p>
-		<p id="typo2" class="texte">knack <br />WERK</p>
+		<p id="typo2" class="texte">knack<br />WERK</p>
 		<p id="typo3" class="texte">DIGITAL<br />barbecue</p>
 		<p id="typo4" class="texte">sound of<br />WURSCHT</p>
 		<p id="typo5" class="texte">ELECTRO<br />meat beat</p>
