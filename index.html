@@ -360,45 +360,60 @@ background-color: #fff;
 
 		  })
 
-
+		var delay = (function(){
+		  var timer = 0;
+		  return function(callback, ms){
+		    clearTimeout (timer);
+		    timer = setTimeout(callback, ms);
+		  };
+		})();
 		
+		//$('body').on('keyup', deflash, derotateSausages);
 
-		$('body').on('keyup', deflash, derotateSausages);
+		$('body').on('keyup',function() {
+		    delay(function(){
+		      deflash;
+		      derotateSausages;
+		    }, 100 );
+		});
+
 		$('body').on('keyup', hidetxt);
 
 		window.requestAnimationFrame(step);
 
 	});
-		function flash(saucisse) {
-			$(saucisse).addClass('incr').removeClass('decr');
-			$(saucisse).css('opacity', '1');
-		}
 
-		function deflash(event) {
-			window.socket.emit('up', event.which);
-			$('.saucisse').addClass('decr').removeClass('incr');
-			$('.saucisse').css('opacity', '0');
-		}
-		function showtxt(typo) {
-			$(typo).css('opacity', '1');
-			$(typo).addClass('blink_me');
+	function flash(saucisse) {
+		$(saucisse).addClass('incr').removeClass('decr');
+		$(saucisse).css('opacity', '1');
+	}
 
-		}
+	function deflash(event) {
+		window.socket.emit('up', event.which);
+		$('.saucisse').addClass('decr').removeClass('incr');
+		$('.saucisse').css('opacity', '0');
+	}
 
-		function hidetxt() {
-			$('.texte').css('opacity', '0');	
-			$('.texte').removeClass('blink_me');
+	function showtxt(typo) {
+		$(typo).css('opacity', '1');
+		$(typo).addClass('blink_me');
+
+	}
+
+	function hidetxt() {
+		$('.texte').css('opacity', '0');	
+		$('.texte').removeClass('blink_me');
 
 
-		}
-		function rotateSausages(saucisse) {
-			$(saucisse).addClass('rotateIncr').removeClass('rotateDecr');
-			$(saucisse).css('opacity', '1');		
-		}
-		function derotateSausages() {
-			$('.saucisse').addClass('rotateDecr').removeClass('rotateIncr');
-			$('.saucisse').css('opacity', '0');
-		}
+	}
+	function rotateSausages(saucisse) {
+		$(saucisse).addClass('rotateIncr').removeClass('rotateDecr');
+		$(saucisse).css('opacity', '1');		
+	}
+	function derotateSausages() {
+		$('.saucisse').addClass('rotateDecr').removeClass('rotateIncr');
+		$('.saucisse').css('opacity', '0');
+	}
 
 
 
