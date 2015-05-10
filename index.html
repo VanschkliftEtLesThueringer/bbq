@@ -57,6 +57,7 @@ background-color: #fff;
 	-webkit-transform: rotate(0deg) !important;
 }
 
+.
 
 /*** style du texte ***/
 #typo1, #typo2, #typo3, #typo4, #typo5, #typo6{
@@ -224,20 +225,14 @@ background-color: #fff;
 			window.socket.emit('up', event.which);
 			$('.saucisse').addClass('decr').removeClass('incr');
 			$('.saucisse').css('opacity', '0');
-			
-			
 		}
-
 		function showtxt(typo) {
-
 			$(typo).css('opacity', '1');
 			$(typo).addClass('blink_me');
-			blink_me	
 
 		}
 
 		function hidetxt() {
-
 			$('.texte').css('opacity', '0');	
 			$('.texte').removeClass('blink_me');
 
@@ -250,7 +245,6 @@ background-color: #fff;
 		function derotateSausages() {
 			$('.saucisse').addClass('rotateDecr').removeClass('rotateIncr');
 			$('.saucisse').css('opacity', '0');
-			
 		}
 
 
@@ -258,16 +252,14 @@ background-color: #fff;
 </script>
 
 <body id="plop">
-	<div id="screen">
 
-		<div>
-			<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
-			<img id="knack2" class="saucisse" src="mcol-sausage.svg" /><br />
-			<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
-			<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
-			<img id="knack5" class="saucisse" src="mcol-sausage.svg" />
-			<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
-		</div>
+	<div id="screen">
+		<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack2" class="saucisse" src="sausage.svg" /><br />
+		<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack5" class="saucisse" src="white-sausage.svg" />
+		<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
 
 		<p id="typo1" class="texte">KRAFT<br />wurscht</p>
 		<p id="typo2" class="texte">knack<br />WERK</p>
