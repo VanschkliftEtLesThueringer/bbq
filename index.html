@@ -282,6 +282,7 @@ background-color: #fff;
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+<<<<<<< HEAD
 
 	function step() {
 		document.deg = document.deg + 1 % 360;
@@ -308,7 +309,7 @@ background-color: #fff;
 
 	function stepCold() {
 		document.deg = document.deg + 1 % 360;
-		var colors = ['#4E9172', '#592121', '#D14545', '#DC7829','#EDB442'];
+		var coldcolors = ['#402A38', '#657371', '#80A694', '#C6D9B8','#8CA62E'];
 		var random_color = colors[Math.floor(Math.random() * colors.length)];
 		var random_color2 = colors[Math.floor(Math.random() * colors.length)];
 
@@ -340,7 +341,7 @@ background-color: #fff;
 		
 
 		document.deg = 0;
-		var isCold = false;
+		var isCold = true;
 
 
 		$('body').keydown(function(event) {
