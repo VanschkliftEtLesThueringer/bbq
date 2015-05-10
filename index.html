@@ -3,6 +3,10 @@
 	<title>test</title>
 </head>
 <style type="text/css">
+
+
+
+
 body {
 	height: 800px;
 	background: repeating-linear-gradient(
@@ -13,23 +17,40 @@ body {
 	  #465298 200px
 	);
 	text-align: center;
+	position: relative;
 }
 
 #knack1, #knack2, #knack3, #knack4, #knack5, #knack6 {
-	width: 20%;
-	margin-top: 100px;
+	width: 15%;
+	margin: 0 10%;
 	transition: all .1s ease-in-out;
-	opacity:0.5;
+	opacity:0;
+	z-index: 10;
 
 }
 
+#typo1 {  z-index: 1;  }
+
+#typo2 {  z-index: 2;  }
+
+#typo3 {  z-index: 3;  }
+
+#typo4 {  z-index: 4;  }
+
+#typo5 {  z-index: 5;  }
+
+#typo6 {  z-index: 6;  }
+
+
+
 .incr { 
-	transform: scale(1.5); 
+	transform: scale(1.75); 
 }
 
 .decr {
 	transform: scale(0.75);
 }
+
 
 .rotateIncr { 
 	-webkit-transform: rotate(360deg) !important;
@@ -39,13 +60,35 @@ body {
 	-webkit-transform: rotate(0deg) !important;
 }
 
+
+
+#typo1, #typo2, #typo3, #typo4, #typo5, #typo6{
+
+	font-size: 1000%;
+	font-weight: bold;
+	color:#650205;
+	position: absolute;
+	line-height: 0.8em;
+	font-family: Helvetica;
+	opacity: 0;
+	transition: all .9s ease-in-out;
+	background-color:#fff;
+	padding: 5%;
+	top:0;
+	left:0;
+	width:70%;
+	margin: 10%;
+	text-align: center;
+
+}
+
 </style>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 		function step() {
-			document.deg = document.deg + 1;
+			document.deg = document.deg + 1 % 360;
 			
 			var style = 'repeating-linear-gradient( '+ document.deg +'deg, #650205, #650205 200px, #9a0a11 200px, #9a0a11 400px)';
 			$('body').css('background', style);
@@ -72,31 +115,39 @@ body {
 		 if ( event.which == 87 ) { // touche w
 		   console.log('touche w');
 		   rotateSausages('#knack1');
+		   flash('#knack1');
+		   showtxt('#typo1');
+
 		  }
 
 		 else if ( event.which == 65 ) { // touche a
 		   console.log('touche a');
 		   flash('#knack2');
+		   showtxt('#typo2');
 		  }
 
 		 else if ( event.which == 83 ) { // touche S
 		   console.log('touche s');
 		   flash('#knack3');
+		   showtxt('#typo3');
 		  }
 
 		 else if ( event.which == 68 ) { // touche d
 		   console.log('touche d');
 		   flash('#knack4');
+		   showtxt('#typo4');
 		  }
 
 		 else if ( event.which == 70 ) { // touche f
 		   console.log('touche f');
 		   flash('#knack5');
+		   showtxt('#typo5');
 		  }
 
 		 else if ( event.which == 71 ) { // touche g
 		   console.log('touche g');
 		   flash('#knack6');
+		   showtxt('#typo6');
 		  }
 
 		 else  { 
@@ -107,8 +158,10 @@ body {
 
 
 		
-		$('body').on('keyup', deflash,derotateSausages);
-		//window.requestAnimationFrame(step);
+
+		$('body').on('keyup', deflash, derotateSausages);
+		$('body').on('keyup', hidetxt);
+		window.requestAnimationFrame(step);
 	});
 		function flash(saucisse) {
 			$(saucisse).addClass('incr').removeClass('decr');
@@ -118,8 +171,21 @@ body {
 		function deflash(event) {
 			window.socket.emit('up', event.which);
 			$('.saucisse').addClass('decr').removeClass('incr');
-			$('.saucisse').css('opacity', '0.1');
+			$('.saucisse').css('opacity', '0');
 			
+			
+		}
+
+		function showtxt(typo) {
+
+			$(typo).css('opacity', '1');	
+
+		}
+
+		function hidetxt() {
+
+			$('.texte').css('opacity', '0');	
+
 		}
 		function rotateSausages(saucisse) {
 			$(saucisse).addClass('rotateIncr').removeClass('rotateDecr');
@@ -136,12 +202,21 @@ body {
 </script>
 
 <body id="plop">
-	<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
-	<img id="knack2" class="saucisse" src="mcol-sausage.svg" />
-	<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
-	<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
-	<img id="knack5" class="saucisse" src="mcol-sausage.svg" />
-	<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
+	<div>
+		<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack2" class="saucisse" src="mcol-sausage.svg" /><br />
+		<img id="knack3" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack4" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack5" class="saucisse" src="mcol-sausage.svg" />
+		<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
+	</div>
+
+	<p id="typo1" class="texte">KRAFT<br />wurscht</p>
+	<p id="typo2" class="texte">knack <br />WERK</p>
+	<p id="typo3" class="texte">DIGITAL<br />barbecue</p>
+	<p id="typo4" class="texte">sound of<br />WURSCHT</p>
+	<p id="typo5" class="texte">ELECTRO<br />meat beat</p>
+	<p id="typo6" class="texte">DROP<br />the meat</p>
 
 
 </body>
