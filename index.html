@@ -282,28 +282,52 @@ background-color: #fff;
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-		function step() {
-			document.deg = document.deg + 1 % 360;
-			var colors = ['#4E9172', '#592121', '#D14545', '#DC7829','#EDB442'];
-			var random_color = colors[Math.floor(Math.random() * colors.length)];
-			var random_color2 = colors[Math.floor(Math.random() * colors.length)];
 
-			var stripesize = [50, 100, 150, 200,250];
-			var randomsize = stripesize[Math.floor(Math.random() * stripesize.length)];
+	function step() {
+		document.deg = document.deg + 1 % 360;
+		var colors = ['#4E9172', '#592121', '#D14545', '#DC7829','#EDB442'];
+		var random_color = colors[Math.floor(Math.random() * colors.length)];
+		var random_color2 = colors[Math.floor(Math.random() * colors.length)];
 
-			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
-			var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' '+randomsize+'px, '+random_color2 +' '+randomsize+'px, '+random_color2+' '+randomsize*2+'px)';
-			
-			$('#screen').css('background', style);
-			//console.log(style);
+		var stripesize = [50, 100, 150, 200,250];
+		var randomsize = stripesize[Math.floor(Math.random() * stripesize.length)];
 
-			$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
+		var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
+		var style = 'repeating-linear-gradient( '+ document.deg +'deg, '+random_color+', '+random_color+' '+randomsize+'px, '+random_color2 +' '+randomsize+'px, '+random_color2+' '+randomsize*2+'px)';
+		
+		$('#screen').css('background', style);
+		//console.log(style);
 
-			setTimeout(function() {
-				window.requestAnimationFrame(step) 
-			}, 100);
-			
-		};
+		$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
+
+		setTimeout(function() {
+			window.requestAnimationFrame(step) 
+		}, 100);
+		
+	};
+
+	function stepCold() {
+		document.deg = document.deg + 1 % 360;
+		var colors = ['#4E9172', '#592121', '#D14545', '#DC7829','#EDB442'];
+		var random_color = colors[Math.floor(Math.random() * colors.length)];
+		var random_color2 = colors[Math.floor(Math.random() * colors.length)];
+
+		var stripesize = [50, 100, 150, 200,250];
+		var randomsize = stripesize[Math.floor(Math.random() * stripesize.length)];
+
+		var style = 'repeating-linear-gradient( -'+ document.deg +'deg, '+random_color+', '+random_color+' 200px, #9a0a11 200px, #9a0a11 400px)';
+		var style = 'repeating-linear-gradient( -'+ document.deg +'deg, '+random_color+', '+random_color+' '+randomsize+'px, '+random_color2 +' '+randomsize+'px, '+random_color2+' '+randomsize*2+'px)';
+		
+		$('#screen').css('background', style);
+		//console.log(style);
+
+		$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
+
+		setTimeout(function() {
+			window.requestAnimationFrame(step) 
+		}, 100);
+		
+	};
 
 
 	$(document).ready(function() {
@@ -316,6 +340,7 @@ background-color: #fff;
 		
 
 		document.deg = 0;
+		var isCold = false;
 
 
 		$('body').keydown(function(event) {
@@ -390,7 +415,12 @@ background-color: #fff;
 
 		$('body').on('keyup', hidetxt);
 
-		window.requestAnimationFrame(step);
+		if(isCold){
+			window.requestAnimationFrame(stepCold);			
+		}else{
+			window.requestAnimationFrame(step);	
+		}
+
 
 	});
 
