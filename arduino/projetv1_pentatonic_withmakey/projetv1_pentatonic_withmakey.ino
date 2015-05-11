@@ -9,23 +9,38 @@
 
 const int arpPin = 6;
 const int vcaPin = 13;
+const int pushPin = 4;
 
+
+int mode = 0; // 0 = mode random, 1 = mode kraft
+int pushState = 0;
 
 arpeggiator arpeggiator(6); //initiate and name the arpeggiator class (Output pin)
 
 //All :tonic, minor2nd, major2nd, minor3rd, major3rd, fourth, tritone, fifth, minor6th, major6th, minor7th, major7th, octave.  See reference.txt for chord and mode ideas. 
-int noteSet[] = {tonic, minor3rd, fourth, fifth, minor7th, tonic+octave, minor3rd+octave};
-//int noteSet[] = {tonic, major2nd, major3rd, fourth, fifth, major2nd + tonic, major3rd + tonic, fourth + tonic, fifth+ tonic};
+//All note values: w, h, q, qt, e, et, sx, sxt, th, sxf  
+
+// Set 1
+//int noteSet[] = {tonic, minor3rd, fourth, fifth, minor7th, tonic+octave, minor3rd+octave};
+//int lengthSet[] = {h, q, et, sx };
+
+// Set 2
+//int noteSet[] = {tonic, major3rd, fifth, major7th, octave, octave+major2nd};
+//int lengthSet[] = {h, q, et, sxt };
+
+// Set 3
+int noteSet[] = {tonic, major2nd, major3rd, fifth, major6th,  tonic+tonic, tonic+major2nd, tonic+major3rd, tonic+fifth, tonic+major6th};
+int lengthSet[] = { qt, e };
+
+int kraft[] = {major2nd, fourth, fourth+octave, fifth+octave, octave+octave, major6th+octave}; 
 
 
 
-// note values: w, h, q, qt, e, et, sx, sxt, th, sxf  
-int lengthSet[] = {h, q, et, sx };
 
 // Global Param
 int randNumberNote = 0;
 int randNumberNoteLengh = 0;
-int BPM = 160;
+int BPM = 145;
   
   
   // Track Params
@@ -48,6 +63,7 @@ int i=0;
   
 void setup() {
   pinMode(arpPin, OUTPUT);
+  pinMode(pushPin, INPUT);
   digitalWrite(vcaPin, 0);
   Serial.begin(115200);
   randomSeed(analogRead(0)); // Init the random function
@@ -90,7 +106,7 @@ void getSerialInfo() {
         if (buf[1] == 5) saucisseDown5();
         saucisseDownAfter();
                                 
-      } else { // key up
+      } else if (buf[0] == 1 ) { // key up
         // buf[1] // nr wurscht
         /*
         saucisseUpBefore();
@@ -103,6 +119,8 @@ void getSerialInfo() {
         */
         saucisseUpAfter();
         
+      } else {
+         mode = 1; 
       }
 
     }
@@ -131,11 +149,42 @@ void createPattern() {
 
 }
 
-void loop() {
+void playKraft() {
+  // put your main code here, to run repeatedly:
+  if (Serial.available()) {
+    buf[idx] = Serial.read();    
+    if (idx == 1) { // buf is full
 
-  getSerialInfo();
-  debug(trackOnOff);
-  playTrack(track);
+      if (buf[0] == 0) {// key down
+        // buf[1] // nr wurscht
+   
+         if (kraft[buf[1]] != -1) {
+           digitalWrite(vcaPin, 1); 
+           arpeggiator.play(BPM, kraft[buf[1]], sx);            
+         } 
+
+
+
+        } else if (buf[0] == 1) { // key up
+          digitalWrite(vcaPin, 0);          
+                                
+        }  else {
+          mode = 0;
+        }
+    }
+    idx = (idx+1) % 2;
+  }
+}
+
+
+void loop() {
+  if (mode == 0) {
+    getSerialInfo();
+    debug(trackOnOff);
+    playTrack(track);
+  } else {
+    playKraft();  
+  }
 }
 
 void playTrack(int * track){
@@ -145,8 +194,7 @@ void playTrack(int * track){
    
    digitalWrite(vcaPin, trackOnOff[playedTrackNoteIndex]);
    if (trackOnOff[playedTrackNoteIndex] == 1) {
- 
-      arpeggiator.play(BPM, track[playedTrackNoteIndex], trackNL[0]);     
+      arpeggiator.play(BPM, track[playedTrackNoteIndex], trackNL[playedTrackNoteIndex]);     
    }
 
    // Get next note of the track
@@ -158,6 +206,7 @@ void playTrack(int * track){
  // Callbacks
 
 void saucisseDownBefore(int saucisse) {
+  playedTrackNoteIndex = 0;
   //trackOnOff[saucisse] =  (trackOnOff[saucisse] + 1) % 2; 
 }
  

@@ -373,7 +373,7 @@ background-color: #fff;
 	 		updateColorsAndRun();
 	 	} else 
 
-		 if ( event.which == 90 ) { // touche w
+		 if ( event.which == 87 ) { // touche w
 		   console.log('touche z');
 		   rotateSausages('#knack1');
 		   flash('#knack1');
@@ -381,7 +381,7 @@ background-color: #fff;
 
 		  }
 
-		 else if ( event.which == 81 ) { // touche a
+		 else if ( event.which == 65 ) { // touche a
 		   console.log('touche q');
 		   flash('#knack2');
 		   rotateSausages('#knack2');
@@ -420,7 +420,7 @@ background-color: #fff;
 		 	console.log('autre touche');
 		  }
 
-		  })
+		  });
 
 		var delay = (function(){
 		  var timer = 0;
@@ -430,7 +430,66 @@ background-color: #fff;
 		  };
 		})();
 		
-		$('body').on('keyup', deflash, derotateSausages);
+		$('body').on('keyup', function() {
+		 	window.socket.emit('up', event.which);
+
+
+
+		 	if (event.which == 13) {
+		 		updateColorsAndRun();
+		 	} else 
+
+			 if ( event.which == 87 ) { // touche w
+			   console.log('touche z');
+			   derotateSausages('#knack1');
+			   deflash('#knack1');
+			   hidetxt('#typo1');
+
+			  }
+
+			 else if ( event.which == 65 ) { // touche a
+			   console.log('touche q');
+			   deflash('#knack2');
+			   derotateSausages('#knack2');
+			   hidetxt('#typo2');
+			  }
+
+			 else if ( event.which == 83 ) { // touche S
+			   console.log('touche s');
+			   deflash('#knack3');
+			   derotateSausages('#knack3');
+			   hidetxt('#typo3');
+			  }
+
+			 else if ( event.which == 68 ) { // touche d
+			   console.log('touche d');
+			   deflash('#knack4');
+			   derotateSausages('#knack4');
+			   hidetxt('#typo4');
+			  }
+
+			 else if ( event.which == 70 ) { // touche f
+			   console.log('touche f');
+			   deflash('#knack5');
+			   derotateSausages('#knack5');
+			   hidetxt('#typo5');
+			  }
+
+			 else if ( event.which == 71 ) { // touche g
+			   console.log('touche g');
+			   deflash('#knack6');
+			   derotateSausages('#knack6');
+			   hidetxt('#typo6');
+			  }
+
+			 else  { 
+			 	console.log('autre touche');
+			  }
+
+			  });
+	
+
+		//$('body').on('keyup', deflash, derotateSausages);
 
 		/*$('body').on('keyup',function() {
 		    delay(function(){
@@ -439,22 +498,23 @@ background-color: #fff;
 		    }, 100 );
 		});*/
 
-		$('body').on('keyup', hidetxt);
+		//$('body').on('keyup', hidetxt);
 
 		checkColorsAndRun(true);
 
 
 	});
 
+	var timeout = 1000;
+
 	function flash(saucisse) {
 		$(saucisse).addClass('incr').removeClass('decr');
 		$(saucisse).css('opacity', '1');
 	}
 
-	function deflash(event) {
-		window.socket.emit('up', event.which);
-		$('.saucisse').addClass('decr').removeClass('incr');
-		$('.saucisse').css('opacity', '0');
+	function deflash(saucisse) {
+		$(saucisse).addClass('decr').removeClass('incr');
+		$(saucisse).css('opacity', '0');
 	}
 
 	function showtxt(typo) {
@@ -463,19 +523,23 @@ background-color: #fff;
 
 	}
 
-	function hidetxt() {
-		$('.texte').css('opacity', '0');	
-		$('.texte').removeClass('blink_me');
-
-
+	function hidetxt(typo) {
+		setTimeout(function() {
+			$(typo).css('opacity', '0');	
+			$(typo).removeClass('blink_me');
+		},timeout);
 	}
 	function rotateSausages(saucisse) {
+		setTimeout(function() {
 		$(saucisse).addClass('rotateIncr').removeClass('rotateDecr');
-		$(saucisse).css('opacity', '1');		
+		$(saucisse).css('opacity', '1');
+		},timeout);		
 	}
-	function derotateSausages() {
-		$('.saucisse').addClass('rotateDecr').removeClass('rotateIncr');
-		$('.saucisse').css('opacity', '0');
+	function derotateSausages(saucisse) {
+		setTimeout(function() {
+		$(saucisse).addClass('rotateDecr').removeClass('rotateIncr');
+		$(saucisse).css('opacity', '0');
+		},timeout);
 	}
 
 

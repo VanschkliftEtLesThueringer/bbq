@@ -116,7 +116,7 @@ background-color: #fff;
 </style>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!--<script src="/socket.io/socket.io.js"></script>-->
+<script src="/socket.io/socket.io.js"></script>
 <script>
 
 	function step() {
@@ -164,7 +164,7 @@ background-color: #fff;
 		
 		//console.log(event.which);
 	 	window.socket.emit('down', event.which);
-		 if ( event.which == 90 ) { // touche w
+		 if ( event.which == 87 ) { // touche w
 		   console.log('touche z');
 
 		   flash('#knack1');
@@ -172,7 +172,7 @@ background-color: #fff;
 
 		  }
 
-		 else if ( event.which == 81 ) { // touche a
+		 else if ( event.which == 65 ) { // touche a
 		   console.log('touche q');
 		   flash('#knack2');
 	
@@ -210,7 +210,7 @@ background-color: #fff;
 		 	console.log('autre touche');
 		  }
 
-		  })
+		  });
 
 		var delay = (function(){
 		  var timer = 0;
@@ -220,7 +220,45 @@ background-color: #fff;
 		  };
 		})();
 		
-		$('body').on('keyup', deflash);
+		$('body').on('keyup', function(event) {
+		  window.socket.emit('up', event.which);
+		  if (event.which == 87) { // touche w
+		    console.log('touche z');
+		    
+		    deflash('#knack1');
+		    
+		    
+		  } else if (event.which == 65) { // touche a
+		    console.log('touche q');
+		    deflash('#knack2');
+		    
+		    
+		  } else if (event.which == 83) { // touche S
+		    console.log('touche s');
+		    deflash('#knack3');
+		    
+		    
+		  } else if (event.which == 68) { // touche d
+		    console.log('touche d');
+		    deflash('#knack4');
+		    
+		    
+		  } else if (event.which == 70) { // touche f
+		    console.log('touche f');
+		    deflash('#knack5');
+		    
+		    
+		  } else if (event.which == 71) { // touche g
+		    console.log('touche g');
+		    deflash('#knack6');
+		    
+		  } else {
+		    console.log('autre touche');
+		  }
+		  
+		});
+
+
 
 		
 
@@ -235,10 +273,13 @@ background-color: #fff;
 		$(saucisse).css('opacity', '1');
 	}
 
-	function deflash(event) {
-		window.socket.emit('up', event.which);
-		$('.saucisse').addClass('decr').removeClass('incr');
-		$('.saucisse').css('opacity', '0');
+	function deflash(saucisse) {
+		setTimeout(function() {
+			$(saucisse).addClass('decr').removeClass('incr');
+			$(saucisse).css('opacity', '0');
+		}, 1000);
+
+
 	}
 
 	

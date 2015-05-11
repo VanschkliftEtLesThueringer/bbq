@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 var SerialPort = require("serialport").SerialPort;
 var serialport = new SerialPort("/dev/tty.usbmodem411",   {baudrate: 115200
 });
+var exec = require('child_process').exec;
 
 app.use(express.static(__dirname + '/static'));
 
@@ -31,15 +32,23 @@ serialport.on('open', function(){
 
 	io.on('connection', function(socket){
 	  socket.on('down', function(msg){
-	    //console.log('down '+ msg);
-    	buf[0] = 0;
-    	buf[1] = keycodetosausage(msg);
-      console.log(buf);
-	    serialport.write(buf, function(err, results) {
+	    console.log('down '+ msg);
+      if (msg == 32) {
+        exec('say "we are the robots!"');
+      } else if (msg == 80) {
+        buf[0] = 2;
+        buf[1] = 0;
+        console.log('change program');
+        serialport.write(buf, function(err, results) {
+        });         
+      } else {
+        buf[0] = 0;
+        buf[1] = keycodetosausage(msg);
+        console.log(buf);
+        serialport.write(buf, function(err, results) {
+        });        
+      }
 
-      //console.log('err ' + err);
-      //console.log('results ' + results);
-   		});
 	  });
 
 	  socket.on('up', function(msg){
@@ -48,9 +57,6 @@ serialport.on('open', function(){
       buf[1] = keycodetosausage(msg);
       console.log(buf);
       serialport.write(buf, function(err, results) {
-
-      //console.log('err ' + err);
-      //console.log('results ' + results);
       });
 	  });
 	});
