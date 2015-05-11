@@ -159,8 +159,7 @@ void playTrack(int * track){
    
    digitalWrite(vcaPin, trackOnOff[playedTrackNoteIndex]);
    if (trackOnOff[playedTrackNoteIndex] == 1) {
- 
-      arpeggiator.play(BPM, track[playedTrackNoteIndex], trackNL[0]);     
+      arpeggiator.play(BPM, track[playedTrackNoteIndex], trackNL[playedTrackNoteIndex]);     
    }
 
    // Get next note of the track
@@ -172,6 +171,7 @@ void playTrack(int * track){
  // Callbacks
 
 void saucisseDownBefore(int saucisse) {
+  playedTrackNoteIndex = 0;
   //trackOnOff[saucisse] =  (trackOnOff[saucisse] + 1) % 2; 
 }
  
