@@ -330,11 +330,19 @@ background-color: #fff;
 	};*/
 
 	function checkColorsAndRun(evIsCold){
+
 		/*if(evIsCold){
 			window.requestAnimationFrame(stepCold);			
 		}else{*/
 			window.requestAnimationFrame(step);	
 		//}
+	}
+
+
+	var colorState = false;
+	function updateColorsAndRun() {
+		colorState = !colorState;
+		checkColorsAndRun(colorState);
 	}
 
 
@@ -344,6 +352,7 @@ background-color: #fff;
 		} else {
 			window.socket = {};
 			window.socket.emit = function() {};
+			window.socket.on = function() {};
 		}
 		
 
@@ -353,8 +362,17 @@ background-color: #fff;
 
 		$('body').keydown(function(event) {
 		
-		//console.log(event.which);
+
+
+		console.log(event.which);
 	 	window.socket.emit('down', event.which);
+
+
+
+	 	if (event.which == 13) {
+	 		updateColorsAndRun();
+	 	} else 
+
 		 if ( event.which == 90 ) { // touche w
 		   console.log('touche z');
 		   rotateSausages('#knack1');
