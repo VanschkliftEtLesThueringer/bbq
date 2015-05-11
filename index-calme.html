@@ -1,0 +1,266 @@
+<html>
+<head>
+	<title>test</title>
+</head>
+<style type="text/css">
+
+
+
+
+
+body {
+background-color: #fff;
+
+}
+
+
+
+
+/*** limitation de l'espace d'affichage ***/
+
+#wrap {
+	overflow: hidden;
+	width:1024px;
+	height: 768px;
+	z-index: 0;
+	position: relative;
+}
+
+
+
+#screen{
+	z-index: 2;
+	overflow: hidden;
+	/*background: #650205;*/
+	text-align: center;
+	position: absolute;
+	top:0;
+	left: 0;
+	width:1024px;
+	height: 768px;
+	transition: all 2s ease-in-out;
+	-moz-transition: all 2s ease-in-out;
+}
+
+
+
+/*** taille des saucisses ***/
+#knack1, #knack2, #knack3, #knack4, #knack5, #knack6 {
+	width: 25%;
+	margin: 0;
+	transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	opacity:0;
+	z-index: 20;
+	position: absolute;
+	top: 20%;
+	left: 40%;
+
+}
+
+
+
+/*** effet de transformation des saucisses ***/
+.incr { 
+	-webkit-animation-name: grandit;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: grandit;
+    -moz-animation-duration: 1000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: grandit;
+    -ms-animation-duration: 1000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+}
+
+@-moz-keyframes grandit {
+    0% { -moz-transform: scale(0.5);opacity: 0; }
+    50% { -moz-transform: scale(3); opacity: 1;}
+    100% { -moz-transform: scale(0.5); opacity: 0;}
+}
+@-webkit-keyframes grandit {
+    0% { -webkit-transform: scale(0.5); opacity: 0;}
+    50% { -webkit-transform: scale(3); opacity: 1;}
+    100% { -webkit-transform: scale(0.5); opacity: 0;}
+}
+@keyframes grandit {
+    0% {transform:scale(1);opacity: 0;}
+    50% {transform:scale(3);opacity: 1;}
+    100% {transform:scale(1); opacity: 0;}
+}
+
+.decr {
+	transform: scale(0.75);
+}
+
+
+
+
+
+#typo1 {  z-index: 1;  }
+
+#typo2 {  z-index: 2;  }
+
+#typo3 {  z-index: 3;  }
+
+#typo4 {  z-index: 4;  }
+
+#typo5 {  z-index: 5;  }
+
+#typo6 {  z-index: 6;  }
+
+
+</style>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!--<script src="/socket.io/socket.io.js"></script>-->
+<script>
+
+	function step() {
+		document.deg = document.deg + 1 % 360;
+		
+		var coldcolors = ['#402A38', '#657371', '#80A694', '#C6D9B8','#8CA62E'];
+		var random_color = coldcolors[Math.floor(Math.random() * coldcolors.length)];
+
+		var style = random_color;
+		
+		$('#screen').css('background', style);
+		//console.log(style);
+
+		//$('#morteau').css('transform', 'rotate(-'+document.deg+'deg)');
+
+		setTimeout(function() {
+			window.requestAnimationFrame(step) 
+		}, 1500);
+		
+	};
+
+
+
+	function checkColorsAndRun(evIsCold){
+		
+			window.requestAnimationFrame(step);	
+		
+	}
+
+
+	$(document).ready(function() {
+		if (window.io !== undefined) {
+			window.socket = io();
+		} else {
+			window.socket = {};
+			window.socket.emit = function() {};
+		}
+		
+
+		document.deg = 0;
+		var isCold = true;
+
+
+		$('body').keydown(function(event) {
+		
+		//console.log(event.which);
+	 	window.socket.emit('down', event.which);
+		 if ( event.which == 90 ) { // touche w
+		   console.log('touche z');
+
+		   flash('#knack1');
+		 
+
+		  }
+
+		 else if ( event.which == 81 ) { // touche a
+		   console.log('touche q');
+		   flash('#knack2');
+	
+		
+		  }
+
+		 else if ( event.which == 83 ) { // touche S
+		   console.log('touche s');
+		   flash('#knack3');
+	
+		   
+		  }
+
+		 else if ( event.which == 68 ) { // touche d
+		   console.log('touche d');
+		   flash('#knack4');
+
+		   
+		  }
+
+		 else if ( event.which == 70 ) { // touche f
+		   console.log('touche f');
+		   flash('#knack5');
+	
+		  
+		  }
+
+		 else if ( event.which == 71 ) { // touche g
+		   console.log('touche g');
+		   flash('#knack6');
+		   
+		  }
+
+		 else  { 
+		 	console.log('autre touche');
+		  }
+
+		  })
+
+		var delay = (function(){
+		  var timer = 0;
+		  return function(callback, ms){
+		    clearTimeout (timer);
+		    timer = setTimeout(callback, ms);
+		  };
+		})();
+		
+		$('body').on('keyup', deflash);
+
+		
+
+
+		checkColorsAndRun(true);
+
+
+	});
+
+	function flash(saucisse) {
+		$(saucisse).addClass('incr').removeClass('decr');
+		$(saucisse).css('opacity', '1');
+	}
+
+	function deflash(event) {
+		window.socket.emit('up', event.which);
+		$('.saucisse').addClass('decr').removeClass('incr');
+		$('.saucisse').css('opacity', '0');
+	}
+
+	
+
+
+
+</script>
+
+<body id="plop">
+	<div id="wrap">
+
+		<div id="screen" >
+			<img id="knack1" class="saucisse" src="mcol-sausage.svg" />
+			<img id="knack2" class="saucisse" src="sausage.svg" />
+			<img id="knack3" class="saucisse" src="merguez.svg" /><br />
+			<img id="knack4" class="saucisse" src="chipo.svg" />
+			<img id="knack5" class="saucisse" src="white-sausage.svg" />
+			<img id="knack6" class="saucisse" src="mcol-sausage.svg" />
+		</div>
+	</div>
+
+
+
+</body>
+</html>
