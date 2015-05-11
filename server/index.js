@@ -25,16 +25,16 @@ serialport.on('open', function(){
 	var buf = new Buffer(2);
 
   serialport.on('data', function(data){
-      console.log(data.toString());
+      //console.log(data.toString());
   });
 
 
 	io.on('connection', function(socket){
 	  socket.on('down', function(msg){
-	    //console.log('down '+ msg);
+	    console.log('down '+ msg);
     	buf[0] = 0;
     	buf[1] = keycodetosausage(msg);
-      console.log(buf);
+      //console.log(buf);
 	    serialport.write(buf, function(err, results) {
 
       //console.log('err ' + err);
@@ -43,10 +43,10 @@ serialport.on('open', function(){
 	  });
 
 	  socket.on('up', function(msg){
-	    console.log('up '+ msg);
+	    //console.log('up '+ msg);
       buf[0] = 1;
       buf[1] = keycodetosausage(msg);
-      console.log(buf);
+      //console.log(buf);
       serialport.write(buf, function(err, results) {
 
       //console.log('err ' + err);
@@ -59,13 +59,13 @@ serialport.on('open', function(){
 
 function keycodetosausage(code) {
 	switch (code) {
-	  case 87:
+	  case 83:
 	  	return 0;
 	    break;	
-	  case 65:
+	  case 90:
 	  	return 1;
 	    break;
-  	  case 83:
+  	  case 81:
   	  	return 2;
     	break;
   	  case 68:

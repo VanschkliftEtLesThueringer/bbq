@@ -9,23 +9,34 @@
 
 const int arpPin = 6;
 const int vcaPin = 13;
+const int pushPin = 4;
 
+int pushState = 0;
 
 arpeggiator arpeggiator(6); //initiate and name the arpeggiator class (Output pin)
 
 //All :tonic, minor2nd, major2nd, minor3rd, major3rd, fourth, tritone, fifth, minor6th, major6th, minor7th, major7th, octave.  See reference.txt for chord and mode ideas. 
-int noteSet[] = {tonic, minor3rd, fourth, fifth, minor7th, tonic+octave, minor3rd+octave};
-//int noteSet[] = {tonic, major2nd, major3rd, fourth, fifth, major2nd + tonic, major3rd + tonic, fourth + tonic, fifth+ tonic};
+//All note values: w, h, q, qt, e, et, sx, sxt, th, sxf  
+
+// Set 1
+//int noteSet[] = {tonic, minor3rd, fourth, fifth, minor7th, tonic+octave, minor3rd+octave};
+//int lengthSet[] = {h, q, et, sx };
+
+// Set 2
+//int noteSet[] = {tonic, major3rd, fifth, major7th, octave, octave+major2nd};
+//int lengthSet[] = {h, q, et, sxt };
+
+// Set 3
+int noteSet[] = {tonic, major2nd, major3rd, fifth, major6th,  tonic+tonic, tonic+major2nd, tonic+major3rd, tonic+fifth, tonic+major6th};
+int lengthSet[] = { qt, e };
 
 
 
-// note values: w, h, q, qt, e, et, sx, sxt, th, sxf  
-int lengthSet[] = {h, q, et, sx };
 
 // Global Param
 int randNumberNote = 0;
 int randNumberNoteLengh = 0;
-int BPM = 160;
+int BPM = 145;
   
   
   // Track Params
@@ -48,6 +59,7 @@ int i=0;
   
 void setup() {
   pinMode(arpPin, OUTPUT);
+  pinMode(pushPin, INPUT);
   digitalWrite(vcaPin, 0);
   Serial.begin(115200);
   randomSeed(analogRead(0)); // Init the random function
@@ -132,7 +144,9 @@ void createPattern() {
 }
 
 void loop() {
-
+  if (digitalRead(pushPin)) {
+     Serial.write("P\n"); 
+  }
   getSerialInfo();
   debug(trackOnOff);
   playTrack(track);
