@@ -12,7 +12,7 @@ const int vcaPin = 13;
 const int pushPin = 4;
 
 
-int mode = 0; // 0 = mode random, 1 = mode kraft
+int mode = 1; // 0 = mode random, 1 = mode kraft
 int pushState = 0;
 
 arpeggiator arpeggiator(6); //initiate and name the arpeggiator class (Output pin)
