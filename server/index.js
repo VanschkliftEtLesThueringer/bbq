@@ -34,7 +34,7 @@ serialport.on('open', function(){
 	  socket.on('down', function(msg){
 	    console.log('down '+ msg);
       if (msg == 32) {
-        exec('say "we are the robots!"');
+        exec('say "we are the sausages!"');
       } else if (msg == 80) {
         buf[0] = 2;
         buf[1] = 0;
